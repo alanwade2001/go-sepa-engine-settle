@@ -14,11 +14,24 @@ import (
 
 type Execution struct {
 	reposMgr *repository.Manager
+	msgIdGen Pacs008MsgIdGenerator
+}
+
+type Pacs008MsgIdGenerator interface {
+	Generate() string
+}
+
+type StaticMsgIdGenerator struct {
+}
+
+func (g *StaticMsgIdGenerator) Generate() string {
+	return "SCTORD156820211213000000012649"
 }
 
 func NewExecution(reposMgr *repository.Manager) *Execution {
 	document := &Execution{
 		reposMgr: reposMgr,
+		msgIdGen: &StaticMsgIdGenerator{},
 	}
 
 	return document
@@ -44,8 +57,9 @@ func (d *Execution) Execute(mdl *model.Execution) (*model.Execution, error) {
 			return nil, err
 		} else {
 			now := time.Now()
+			msgId := d.msgIdGen.Generate()
 			gh := &pacs_008_001_02.GroupHeader33{
-				MsgId:   "SCTORD156820211213000000012649",
+				MsgId:   msgId,
 				CreDtTm: now.Format("2006-12-13T13:24:39"),
 				NbOfTxs: strconv.FormatInt(rows, 10),
 				CtrlSum: amount,
@@ -78,7 +92,7 @@ func (d *Execution) Execute(mdl *model.Execution) (*model.Execution, error) {
 				perSg.CtrlSum = amount
 				perSg.NbOfTxs = uint(rows)
 				perSg.CreDtTm = &now
-				perSg.MsgID = "pacs008-1"
+				perSg.MsgID = msgId
 				perSg.GrpHdr = string(ghBytes)
 
 				if updSg, err := d.reposMgr.SettlementGroup.Perist(perSg); err != nil {

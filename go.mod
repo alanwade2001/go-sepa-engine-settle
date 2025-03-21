@@ -5,12 +5,12 @@ go 1.24.1
 require (
 	github.com/alanwade2001/go-sepa-engine-data v0.0.0-20250318165606-12853be33018
 	github.com/alanwade2001/go-sepa-infra v0.0.0-20250315081258-15a31e175e55
+	github.com/alanwade2001/go-sepa-iso v0.0.0-20250317150013-53854c05d098
 	github.com/gin-gonic/gin v1.10.0
 )
 
 require (
 	github.com/alanwade2001/go-sepa-db v0.0.0-20250314181629-ba7d1fd3f464 // indirect
-	github.com/alanwade2001/go-sepa-iso v0.0.0-20250317150013-53854c05d098 // indirect
 	github.com/alanwade2001/go-sepa-q v0.0.0-20250314083628-f5d6c10782b5 // indirect
 	github.com/alanwade2001/go-sepa-utils v0.0.0-20250314081604-0992fcffbc2d // indirect
 	github.com/bytedance/sonic v1.11.6 // indirect
